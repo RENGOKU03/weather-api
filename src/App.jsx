@@ -13,6 +13,7 @@ function App() {
     fetchFromURL(search).then((result) => {
       if (result) {
         setTemp(result);
+        return;
       }
     });
   }, [search]);
@@ -20,6 +21,7 @@ function App() {
   const handelSearchSubmit = (e) => {
     e.preventDefault();
     const searchTerm = searchTab.current.value;
+    if (searchTerm.length == 0) return alert("Please select a search term");
     setSearch(searchTerm);
   };
   return (
@@ -43,7 +45,7 @@ function App() {
           <div className="h-[60%] text-white/ flex flex-col items-center pt-16 gap-6">
             <img src="src/assets/sun-color-icon.svg" alt="" className="h-36" />
             <p className="text-8xl">{temp?.current?.temp_c || "40%"} °C</p>
-            <p className="text-7xl">{temp?.location?.name || search}</p>
+            <p className="text-7xl">{temp?.location?.name || undefined}</p>
           </div>
           <div className="flex h-40 text-2xl justify-center gap-20">
             <div className="flex items-center gap-6 ">

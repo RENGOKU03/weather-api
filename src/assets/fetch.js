@@ -12,7 +12,13 @@ export const fetchFromURL = async function (cityName) {
   try {
     const response = await fetch(`${URL}${cityName}`, options);
     const result = await response.json();
-    return result;
+    if (response.ok) {
+      return result;
+    }
+    if (!response.ok) {
+      alert("City not Found");
+      return;
+    }
   } catch (error) {
     console.error("Error:", error);
   }
