@@ -17,7 +17,7 @@ function App() {
       }
     });
   }, [search]);
-
+  console.log(temp);
   const handelSearchSubmit = (e) => {
     e.preventDefault();
     const searchTerm = searchTab.current.value;
@@ -32,7 +32,7 @@ function App() {
             <input
               type="text"
               ref={searchTab}
-              className="s rounded-3xl p-3 text-xl text-gray-700 w-72 focus:outline focus:outline-violet-900"
+              className="rounded-3xl p-3 text-xl text-gray-700 w-72 focus:outline focus:outline-violet-900"
               placeholder="Search"
             />
             <button
@@ -43,7 +43,11 @@ function App() {
             </button>
           </div>
           <div className="h-[60%] text-white/ flex flex-col items-center pt-16 gap-6">
-            <img src="src/assets/sun-color-icon.svg" alt="" className="h-36" />
+            <img
+              src={temp?.current?.condition?.icon || "./icon.svg"}
+              alt="weather-condition-icon"
+              className="h-36"
+            />
             <p className="text-8xl">{temp?.current?.temp_c || "40%"} °C</p>
             <p className="text-7xl">{temp?.location?.name || undefined}</p>
           </div>

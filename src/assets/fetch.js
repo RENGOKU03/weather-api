@@ -7,7 +7,6 @@ const options = {
     "x-rapidapi-host": "weatherapi-com.p.rapidapi.com",
   },
 };
-
 export const fetchFromURL = async function (cityName) {
   try {
     const response = await fetch(`${URL}${cityName}`, options);
