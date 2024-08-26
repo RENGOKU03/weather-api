@@ -26,8 +26,8 @@ function App() {
   };
   return (
     <>
-      <div className="h-screen bg-purple-500 w-full flex justify-center">
-        <div className="bg-violet-700 h-[700px] w-[500px] rounded-3xl m-auto text-white/90">
+      <div className="h-screen bg-purple-500 w-full flex justify-center overflow-hidden ">
+        <div className="bg-violet-700 h-[90%] w-[500px] rounded-3xl m-auto text-white/90">
           <div className="flex justify-center gap-7 mt-10">
             <input
               type="text"
