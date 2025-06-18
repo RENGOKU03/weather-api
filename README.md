@@ -1,8 +1,33 @@
-# React + Vite
+# 🌤️ WeatherVista – React Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WeatherVista is a sleek, animated weather app built with **React**, **Tailwind CSS**, and **Framer Motion**. It uses the **WeatherAPI** via RapidAPI to display real-time weather details with a smooth and responsive UI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+
+- 🔍 Search weather by city
+- 🌡️ Real-time temperature, humidity & wind speed
+- ✨ Animated transitions using Framer Motion
+- 🎨 Modern, responsive UI with Tailwind CSS
+- ⚠️ Modal alerts for invalid input or city not found
+
+---
+
+## 🛠️ Tech Stack
+
+- **React**
+- **Tailwind CSS**
+- **Framer Motion**
+- **WeatherAPI (via RapidAPI)**
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/yourusername/weather-app.git
+cd weather-app
+npm install
+npm run dev
+```
