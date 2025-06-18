@@ -14,125 +14,104 @@ function App() {
 
   useEffect(() => {
     fetchFromURL(search).then((result) => {
-      if (result) setTemp(result);
+      if (result) {
+        setTemp(result);
+      } else {
+        setShowModal(true); // ✅ Show modal if city not found or error
+      }
     });
   }, [search]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const searchTerm = searchTab.current.value.trim();
-    if (!searchTerm) return setShowModal(true);
+    if (!searchTerm) {
+      setShowModal(true); // ✅ use modal, not alert
+      return;
+    }
     setSearch(searchTerm);
   };
 
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 p-4"
-      >
+      {/* Main UI */}
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600 p-4">
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-3xl p-6 shadow-2xl text-white"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="w-full max-w-md bg-white/10 backdrop-blur-xl rounded-3xl p-6 shadow-2xl text-white"
         >
           <form
-            className="flex items-center gap-3 mb-6"
             onSubmit={handleSearchSubmit}
+            className="flex items-center gap-3 mb-6"
           >
-            <motion.input
-              type="text"
+            <input
               ref={searchTab}
-              placeholder="Search location..."
-              whileFocus={{ scale: 1.02 }}
-              className="flex-1 p-3 rounded-full text-gray-800 text-lg focus:outline-none"
+              type="text"
+              placeholder="Search city..."
+              className="flex-1 p-3 rounded-full text-gray-900 text-lg focus:outline-none"
             />
             <motion.button
-              type="submit"
               whileTap={{ scale: 0.9 }}
               whileHover={{ scale: 1.1 }}
-              className="bg-white rounded-full p-3 hover:bg-gray-100 transition"
+              className="bg-white rounded-full p-3 hover:bg-gray-200"
             >
-              <FaSearch size={20} className="text-gray-700" />
+              <FaSearch className="text-gray-700" />
             </motion.button>
           </form>
 
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="flex flex-col items-center gap-4 text-center"
-          >
+          <div className="flex flex-col items-center gap-4 text-center">
             <motion.img
               src={temp?.current?.condition?.icon || "./icon.svg"}
               alt="Weather Icon"
               className="h-24"
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ repeat: Infinity, duration: 4 }}
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 6 }}
             />
             <h1 className="text-5xl font-bold">
               {temp?.current?.temp_c ?? "--"}°C
             </h1>
-            <p className="text-3xl font-light">
-              {temp?.location?.name ?? "Unknown Location"}
-            </p>
-          </motion.div>
+            <p className="text-2xl">{temp?.location?.name ?? "Unknown"}</p>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="mt-10 flex justify-around text-center text-lg"
-          >
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              className="flex flex-col items-center gap-2"
-            >
+          <div className="mt-10 flex justify-around text-center text-lg">
+            <div className="flex flex-col items-center gap-2">
               <LuWaves size={32} />
               <p>{temp?.current?.humidity ?? "--"}%</p>
               <span className="text-sm text-white/70">Humidity</span>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              className="flex flex-col items-center gap-2"
-            >
+            </div>
+            <div className="flex flex-col items-center gap-2">
               <FaWind size={32} />
               <p>{temp?.current?.wind_kph ?? "--"} km/h</p>
               <span className="text-sm text-white/70">Wind Speed</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Modal */}
       <AnimatePresence>
         {showModal && (
           <motion.div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
             onClick={() => setShowModal(false)}
           >
             <motion.div
+              onClick={(e) => e.stopPropagation()}
+              className="bg-gradient-to-br from-blue-400 to-indigo-500 text-white p-6 rounded-2xl shadow-xl text-center w-80"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-xl p-6 text-center w-80 shadow-lg"
             >
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                Empty Search!
-              </h2>
-              <p className="text-gray-600 mb-6">
-                Please enter a location before searching.
-              </p>
+              <h2 className="text-2xl font-bold mb-3">🌤️ Oops!</h2>
+              <p className="text-lg mb-6">Please enter a location to search.</p>
               <button
                 onClick={() => setShowModal(false)}
-                className="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition"
+                className="bg-white text-indigo-600 font-semibold px-5 py-2 rounded-full hover:bg-gray-100"
               >
                 OK
               </button>
